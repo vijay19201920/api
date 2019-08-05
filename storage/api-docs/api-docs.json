@@ -1,0 +1,1673 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "SpainOption-FINT ",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "127.0.0.1:8000",
+    "basePath": "",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "This api is responsible to Register a new user.",
+                "description": "Register new user.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "phone",
+                        "in": "formData",
+                        "required": true,
+                        "type": "integer",
+                        "default": ""
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string",
+                        "default": ""
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string",
+                        "default": ""
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "formData",
+                        "required": false,
+                        "type": "decimal"
+                    },
+                    {
+                        "name": "latitude",
+                        "in": "formData",
+                        "required": false,
+                        "type": "decimal"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/DeviceAuthError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "This api is used for login user,Login with user credential.",
+                "description": "Login with user credential.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "client_id",
+                        "in": "header",
+                        "required": true,
+                        "type": "integer",
+                        "default": "2"
+                    },
+                    {
+                        "name": "client_secret",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "EnKPIVgE3hIu6DCNWUgTIO8f4JxHoS5eirnXewBl"
+                    },
+                    {
+                        "name": "grant_type",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "password",
+                        "schema": {
+                            "$ref": "#/definitions/DeviceAuthParam"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/DeviceAuthError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/password/email": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "This api is responsible to reset password or Forgot Password.",
+                "description": "Forgot password users.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string",
+                        "default": "a@a.com"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "This api is only used for Logout the User",
+                "description": "Authenticate user",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/create-post": {
+            "post": {
+                "tags": [
+                    "SECRETS"
+                ],
+                "summary": "This api is used for Creating  new Secrets or post.",
+                "description": "This api is only responsible to create new secrets or post Secrets save in to database.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "post_text",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "post_image",
+                        "in": "formData",
+                        "required": false,
+                        "type": "file"
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "formData",
+                        "type": "decimal"
+                    },
+                    {
+                        "name": "latitude",
+                        "in": "formData",
+                        "type": "decimal"
+                    },
+                    {
+                        "name": "color",
+                        "in": "formData",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/SaveCashDrawerResponseMatch"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action.",
+                        "schema": {
+                            "$ref": "#/definitions/SaveCashDrawerErrorNotMatch"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/get-my-post": {
+            "get": {
+                "tags": [
+                    "SECRETS"
+                ],
+                "summary": "This api is used for only Get user secrets",
+                "description": "Only responsible for individual user secrets.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/SaveCashDrawerResponseMatch"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/SaveCashDrawerErrorNotMatch"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/post": {
+            "get": {
+                "tags": [
+                    "SECRETS"
+                ],
+                "summary": "This api is responsible for Get all secrets.",
+                "description": "get all secrets created by each users.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/SaveCashDrawerResponseMatch"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/SaveCashDrawerErrorNotMatch"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/single-post/{post_id}": {
+            "get": {
+                "tags": [
+                    "SECRETS"
+                ],
+                "summary": "This api is used for Get single secrets details",
+                "description": "get secrets with details.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/SaveCashDrawerResponseMatch"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/SaveCashDrawerErrorNotMatch"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/post-update/{post_id}": {
+            "post": {
+                "tags": [
+                    "SECRETS"
+                ],
+                "summary": "This api is responsible to Update the secrets.",
+                "description": "update secrets value.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "post_text",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "post_image",
+                        "in": "formData",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "formData",
+                        "required": false,
+                        "type": "decimal"
+                    },
+                    {
+                        "name": "latitude",
+                        "in": "fromData",
+                        "required": false,
+                        "type": "decimal"
+                    },
+                    {
+                        "name": "color",
+                        "in": "fromData",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/SaveCashDrawerResponseMatch"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/SaveCashDrawerErrorNotMatch"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/post-delete/{post_id}": {
+            "delete": {
+                "tags": [
+                    "SECRETS"
+                ],
+                "summary": "This api is only used for delete the secrets.",
+                "description": "delet specific secrets from database.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/SaveCashDrawerResponseMatch"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/SaveCashDrawerErrorNotMatch"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/create-comment/{post_id}": {
+            "post": {
+                "tags": [
+                    "Secrets Comment"
+                ],
+                "summary": "This api is used for Create comment on secrets.",
+                "description": "This api is used for Create comment on secrets.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer",
+                        "default": "1"
+                    },
+                    {
+                        "name": "comment",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success , Items object",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized action.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/update-comment": {
+            "post": {
+                "tags": [
+                    "Secrets Comment"
+                ],
+                "summary": "This api is used for Update the comment on secrets.",
+                "description": "update comment created by users only owner of comment can update.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "comment_id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "integer",
+                        "default": "1"
+                    },
+                    {
+                        "name": "comment",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success , Items object",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized action.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/post-comment-delete/{comment_id}": {
+            "delete": {
+                "tags": [
+                    "Secrets Comment"
+                ],
+                "summary": "This api is used for delete the comment on secrets.",
+                "description": "Delete comment created by users only owner of comment can delete.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "comment_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer",
+                        "default": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/post-comment-count/{post_id}/{user_id?}": {
+            "get": {
+                "tags": [
+                    "Secrets Comment"
+                ],
+                "summary": "This api is used for comment count on secrets of user.",
+                "description": "count all comment of secrets by user.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer",
+                        "default": "1"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": false,
+                        "type": "integer",
+                        "default": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/post-comments/{post_id}": {
+            "get": {
+                "tags": [
+                    "Secrets Comment"
+                ],
+                "summary": "This api is used for comment list secrets.",
+                "description": "api is used for comment list secrets.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer",
+                        "default": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/post-like/{post_id}": {
+            "post": {
+                "tags": [
+                    "Secrets Like"
+                ],
+                "summary": "This api is used for like and unlike on secrets.",
+                "description": "only responsible for like and dislike secrets authorized users.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer",
+                        "default": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/post-like-count/{post_id}": {
+            "get": {
+                "tags": [
+                    "Secrets Like Count"
+                ],
+                "summary": "This api is used for Get secrets like count.",
+                "description": "get all count like on secrets which is in secrets.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer",
+                        "default": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/followingCount": {
+            "get": {
+                "tags": [
+                    "Follower"
+                ],
+                "summary": "This api is used for get following count",
+                "description": "Following count",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success , Following: 2",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthenticated.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/followerCount": {
+            "get": {
+                "tags": [
+                    "Follower"
+                ],
+                "summary": "This api is used for get follower count",
+                "description": "Follower count",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success , Follower: 2",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthenticated.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/profile": {
+            "get": {
+                "tags": [
+                    "PROFILE"
+                ],
+                "summary": "This api is used for get the private profile.",
+                "description": "get profile,total like,total comment,total secrets,total favourite,show_me.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/StoreCreated"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/show-me": {
+            "post": {
+                "tags": [
+                    "PROFILE"
+                ],
+                "summary": "This api is used for only visibility of Private Profile visibility.",
+                "description": "get profile visibility.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/StoreCreated"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/privateProfile": {
+            "get": {
+                "tags": [
+                    "PROFILE"
+                ],
+                "summary": "This api is used for Get my private profile.",
+                "description": "get my private profile.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/StoreCreated"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/listPostUserLikes": {
+            "get": {
+                "tags": [
+                    "PROFILE"
+                ],
+                "summary": "This api is used for get list of post user likes.",
+                "description": "This api will return all post of current user likes.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/StoreCreated"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/listPostUserComment": {
+            "get": {
+                "tags": [
+                    "PROFILE"
+                ],
+                "summary": "This api is used for get list of post on which user commented.",
+                "description": "This api will return all post on which user commented to another user post.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/StoreCreated"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/savedPostByUser": {
+            "get": {
+                "tags": [
+                    "PROFILE"
+                ],
+                "summary": "This api is used for get list of post which is saved by current user.",
+                "description": "This api will return all post which is saved by user.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/StoreCreated"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/follow/{user_id}": {
+            "post": {
+                "tags": [
+                    "FOLLOW"
+                ],
+                "summary": "This api is used for follow users.",
+                "description": "Follow user.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer",
+                        "default": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/unfollow/{user_id}": {
+            "delete": {
+                "tags": [
+                    "FOLLOW"
+                ],
+                "summary": "This api is used for unfollow users.",
+                "description": "Unfollow user.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer",
+                        "default": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "This api is used for get all users details.",
+                "description": "get all users details.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/StoreAssigned"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/city-list": {
+            "get": {
+                "tags": [
+                    "City List"
+                ],
+                "summary": "This api is used for get city name list.",
+                "description": "Get city name.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/get-near-by-city-name": {
+            "post": {
+                "tags": [
+                    "Near by city name"
+                ],
+                "summary": "This api is return near by city name based on longitude and latitude.",
+                "description": "Get city name.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "latitude",
+                        "in": "formdata",
+                        "required": true,
+                        "type": "decimal"
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "formdata",
+                        "required": true,
+                        "type": "decimal"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/get-post-by-city/{city_id}": {
+            "post": {
+                "tags": [
+                    "City List"
+                ],
+                "summary": "This api is used for get specific city name.",
+                "description": "Get city name.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "city_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/search": {
+            "post": {
+                "tags": [
+                    "Search"
+                ],
+                "summary": "This api is used for search secrets by secrets text.",
+                "description": "Search secrets",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "post_text",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "latitude",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/get-followers-posts": {
+            "get": {
+                "tags": [
+                    "SECRETS"
+                ],
+                "summary": "This api is used get the secrets or post of current user logged in who is follow.",
+                "description": "secrets of follower",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/favorite/{post_id}": {
+            "post": {
+                "tags": [
+                    "Favorite"
+                ],
+                "summary": "This api is used for add to user profile favorite secrets.",
+                "description": "Favorite secrets",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/my-favorite": {
+            "get": {
+                "tags": [
+                    "Favorite"
+                ],
+                "summary": "This api is used to show my Favorite secrets.",
+                "description": "My Favorite secrets",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/api/notification-get": {
+            "post": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "This api is used for get Notification.",
+                "description": "Get Notification of all activities",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "X-localization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {}
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "DeviceAuthParam": {
+            "description": "device and user info",
+            "required": [
+                "username",
+                "deviceuid"
+            ],
+            "properties": {
+                "username": {
+                    "type": "string",
+                    "example": "demoowner"
+                },
+                "deviceuid": {
+                    "type": "string",
+                    "example": "uid1234"
+                }
+            },
+            "type": "object"
+        },
+        "DeviceAuthError": {
+            "description": "device and user info",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "AuthenticationFailed"
+                },
+                "device": {
+                    "type": "string",
+                    "example": "null"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "error"
+                }
+            },
+            "type": "object"
+        }
+    }
+}

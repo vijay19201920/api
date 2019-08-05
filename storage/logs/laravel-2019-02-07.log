@@ -1,0 +1,12 @@
+[2019-02-07 21:50:35] local.INFO: Broadcasting [Illuminate\Notifications\Events\BroadcastNotificationCreated] on channels [private-App.User.2] with payload:
+{
+    "id": "49e12897-c2ef-4d10-9cb3-7e31080bd969",
+    "read_at": null,
+    "data": {
+        "following_id": 1,
+        "following_name": "admin",
+        "post_id": 12
+    },
+    "type": "App\\Notifications\\NewPost",
+    "socket": null
+}  
